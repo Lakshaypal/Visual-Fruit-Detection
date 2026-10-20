@@ -1,34 +1,41 @@
-# 🍎 Fruit Counting Task
-This project uses **YOLO (You Only Look Once)** for **fruit detection and counting** from **front and back images** of plants.
+# Fruit Detection from Plant Images
 
-## 🚀 How to Run the Project?
-### 1️⃣ Install Dependencies
-Before running the scripts, install the required Python libraries:  
-```bash
-pip install ultralytics opencv-python numpy
+A small computer-vision project that runs an Ultralytics YOLO checkpoint on plant photographs and saves annotated images. A second script processes front/back image pairs.
+
+## What the scripts do
+
+- `scripts/detect.py`: runs inference on the JPG images in `data/` and writes annotated results.
+- `scripts/process_all.py`: finds numbered `front_imgN.jpg` images, looks for their matching `back_imgN.jpg`, and runs inference on both views.
+
+The current paired-view script does **not** match detections across views or compute a unique-fruit count. The repository demonstrates detection and paired-image processing, rather than a validated multi-view counting algorithm.
+
+## Setup
+
+Use Python 3.10+ and run from the repository root:
+
+```sh
+git clone https://github.com/Lakshaypal/Fruit-detecting-system.git
+cd Fruit-detecting-system
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 ```
 
-### 2️⃣ Run YOLO Detection on Images
-Detect fruits in all images and **save results** in the `results/` folder:  
-```bash
+Retrieve the committed checkpoint and sample images, including Git LFS content where applicable:
+
+```sh
+git lfs pull
+```
+
+The scripts resolve data, weights and output paths relative to the repository, so they also work when launched from another working directory.
+
+```sh
 python scripts/detect.py
-```
-👉 This will process **all images in `data/`** and save the **detected images in `results/`**.
-
-### 3️⃣ Count Unique Fruits Using Front & Back Views
-To **count fruits uniquely** (avoiding duplicate detections from both sides), run:  
-```bash
 python scripts/process_all.py
 ```
-👉 This will **count unique fruits** based on bounding box positions and print the total fruit count.
 
-## 💡 Explanation of Scripts
-### `detect.py` (Object Detection)
-- Loads **YOLO model (`best.pt`)**  
-- Runs YOLO detection on all **images in `data/`**  
-- Saves **results in `results/`**  
+The checkpoint is `models/best.pt`; outputs are written to `results/`. Supply only model checkpoints you trust. No training pipeline, held-out accuracy benchmark or cross-view correspondence model is included.
 
-### `process_all.py` (Fruit Counting)
-- **Extracts fruit detections** from YOLO's bounding boxes  
-- **Matches front & back detections** to **avoid duplicates**  
-- **Prints total unique fruit count**  
+## Stack
+
+Python, Ultralytics YOLO, OpenCV and NumPy. Existing annotated outputs are included as examples.

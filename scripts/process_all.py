@@ -1,13 +1,15 @@
+from pathlib import Path
 from ultralytics import YOLO
 import os
 import numpy as np
 
 # Load YOLO model
-model = YOLO("models/best.pt")
+ROOT = Path(__file__).resolve().parents[1]
+model = YOLO(str(ROOT / "models" / "best.pt"))
 
 # Folders
-image_folder = "data/"
-output_folder = "results/"
+image_folder = str(ROOT / "data")
+output_folder = str(ROOT / "results")
 os.makedirs(output_folder, exist_ok=True)
 
 # Store total unique fruit count
@@ -17,7 +19,8 @@ total_fruit_count = 0
 fruit_positions = {}
 
 # Process images in pairs (front & back views)
-for i in range(1, len(os.listdir(image_folder)) // 2 + 1):
+pair_ids = sorted({p.stem.removeprefix("front_img") for p in Path(image_folder).glob("front_img*.jpg")}, key=lambda value: (not value.isdigit(), int(value) if value.isdigit() else value))
+for i in pair_ids:
     front_img = f"front_img{i}.jpg"
     back_img = f"back_img{i}.jpg"
     

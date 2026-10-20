@@ -1,12 +1,14 @@
+from pathlib import Path
 import os
 from ultralytics import YOLO  # Using Ultralytics YOLOv5
 
 # Load YOLO model
-model = YOLO("models/best.pt")
+ROOT = Path(__file__).resolve().parents[1]
+model = YOLO(str(ROOT / "models" / "best.pt"))
 
 # Folders
-image_folder = "data/"
-output_folder = "results/"
+image_folder = str(ROOT / "data")
+output_folder = str(ROOT / "results")
 os.makedirs(output_folder, exist_ok=True)
 
 # Process all images
