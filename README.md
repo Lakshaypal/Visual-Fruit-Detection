@@ -1,4 +1,4 @@
-# Fruit Detection from Plant Images
+# Visual Fruit Detection
 
 A small computer-vision project that runs an Ultralytics YOLO checkpoint on plant photographs and saves annotated images. A second script processes front/back image pairs.
 
@@ -14,8 +14,8 @@ The current paired-view script does **not** match detections across views or com
 Use Python 3.10+ and run from the repository root:
 
 ```sh
-git clone https://github.com/Lakshaypal/Fruit-detecting-system.git
-cd Fruit-detecting-system
+git clone https://github.com/Lakshaypal/Visual-Fruit-Detection.git
+cd Visual-Fruit-Detection
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
